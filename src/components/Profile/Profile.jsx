@@ -1,17 +1,17 @@
 import React from 'react';
 import MyPosts from './MyPosts/MyPosts';
+import MyPostsContainer from './MyPosts/MyPostsContainer';
 import s from './Profile.module.css';  
+import ProfileInfo from './ProfileInfo/ProfileInfo';
 
-const Profile = () => {
-    return <div>
-        <div>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Embl%C3%A8me_de_l%27Ordre_Jedi.svg/1200px-Embl%C3%A8me_de_l%27Ordre_Jedi.svg.png"></img>
+
+const Profile = (props) => {
+    return (
+        <div >
+            <ProfileInfo />
+            <MyPostsContainer store = {props.store} />
         </div>
-        <div>
-            ava + description
-        </div>
-    <MyPosts />
-    </div>
+    )
 }
 
 export default Profile;

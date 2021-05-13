@@ -3,3 +3,16 @@
     grid-area: c;
     background-color: cornflowerblue;
 }
+
+.postsBlock {
+
+    padding: 10px;
+}
+
+.posts {
+    margin-top: 10px;
+}
+
+.buttons button {
+    margin-right: 10px;
+}

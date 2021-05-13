@@ -1,35 +1,45 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import s from './Dialogs.module.css'
+import s from './Dialogs.module.css';
+import DialogItem from './DialogItem/DialogItem';
+import Message from './Message/Message';
+import {addMessageActionCreator,updateNewMessageTextActionCreator} from '../../redux/dialogsReducer'
 
-const Dialogs = () => {
+
+
+const Dialogs = (props) => {
+
+
+    let dialogsElements = props.dialogs
+    .map( d => <DialogItem name ={d.name} key={d.id} id={d.id}/>);
+
+    let messagesElements = props.messages
+    .map( m => <Message message={m.message} key={m.id} />);
+
+    let messageElement = React.createRef();
+
+    let addMessage = () => {
+
+        props.addMessage();
+    }
+    let updateNewMessage = () => {
+
+        let text = messageElement.current.value;
+        props.updateNewMessage(text);
+        
+    }
+
 
     return (
         <div className={s.dialogs}>
             <div className={s.dialogItems}>
-                <div className={s.dialog + ' ' + s.active}>
-                    <NavLink to='/dialogs/1'>Obi-Wan Kenobi</NavLink>
-                </div>
-                <div className={s.dialog}>
-                    <NavLink to='/dialogs/2'>Master Yoda</NavLink>
-                </div>
-                <div className={s.dialog}>
-                    <NavLink to='/dialogs/3'>Ashoka Tano</NavLink>
-                </div>
-                <div className={s.dialog}>
-                    <NavLink to='/dialogs/4'>Meis-Windu</NavLink>
-                </div>
-                <div className={s.dialog}>
-                    <NavLink to='/dialogs/5'>Chancelor Palpatine</NavLink>
-                </div>
-                <div className={s.dialog}>
-                    <NavLink to='/dialogs/6'>Senate</NavLink>
-                </div>
+                {dialogsElements}
             </div>
             <div className={s.messages}>
-                <div className={s.message}>Hi</div>
-                <div className={s.message}>How are you?</div>
-                <div className={s.message}>Yo</div>
+                {messagesElements}
+            </div>
+            <div>
+                <textarea placeholder='Enter your message' onChange={updateNewMessage} ref={messageElement} value={props.newMessage}></textarea>
+                <button className={s.button1} onClick={addMessage}>Submit</button>
             </div>
         </div>
     )
