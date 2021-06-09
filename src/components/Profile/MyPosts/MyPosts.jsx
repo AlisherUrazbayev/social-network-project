@@ -1,12 +1,25 @@
 import React from 'react';
 import s from './MyPosts.module.css'; 
 import Post from './Post/Post'; 
+import PostImage from './Post/PostImage'
+import Preloader from './../../common/preloader/Preloader'
 import {addPostActionCreator, updateNewPostChangeActionCreator} from '../../../redux/profileReducer'
 
 const MyPosts = (props) => {
 
-    let postsElements = props.posts
-    .map( p => <Post message={p.message} likeCount={p.likeCount}/>)
+    if (!props.userProfile) {
+        return (
+            <>
+                <Preloader />
+            </>
+        )
+    }
+
+
+
+    let postsElements = props.posts 
+    .map( p => <Post message={p.message} likeCount={p.likeCount} />);
+
 
     let newPostElement = React.createRef();
 
@@ -25,6 +38,8 @@ const MyPosts = (props) => {
         props.updateNewPostText(text);
     }
 
+
+
     return (
         <div className={s.postsBlock}>
             <h2>My posts</h2>
@@ -39,6 +54,7 @@ const MyPosts = (props) => {
                 </div>
             </div>
             <div className={s.posts}>
+                <PostImage userPhoto={props.userProfile.photos.small} />
                 {postsElements}
             </div>
         </div>

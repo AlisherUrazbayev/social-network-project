@@ -43,7 +43,7 @@ let store = {
     },
 
     _callSubscriber() {
-        console.log('state changed')
+        console.log('state changed')// console log is changing to rerenderEntireTree function from index.js
     },
 
     subscribe(observer) {

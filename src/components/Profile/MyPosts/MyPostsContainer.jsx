@@ -8,7 +8,8 @@ const mapStateToProps = (state) =>{
 
     return {
         posts: state.profilePage.posts,
-        newPost: state.profilePage.newPost
+        newPost: state.profilePage.newPost,
+        userProfile: state.profilePage.userProfile
     }
 
 }
