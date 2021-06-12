@@ -1,9 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { follow,  unfollow, changeCurrentPageThunk,  getUsers } from '../../redux/usersReducer';
+import { follow, unfollow, changeCurrentPageThunk, getUsers } from '../../redux/usersReducer';
 import Users from './Users';
 import Preloader from '../common/preloader/Preloader';
 import { Redirect } from 'react-router-dom';
+import { withAuthRedirect } from './../../hoc/hoc'
+import { compose } from 'redux';
 
 
 
@@ -24,13 +26,12 @@ class UsersContainer extends React.Component {
 
         this.props.changeCurrentPageThunk(pageNumber);
         this.props.getUsers(pageNumber, this.props.pageSize);
-        
+
     }
 
 
     render() {
 
-        if(!this.props.isLoggedIn) return <Redirect to={'/login'}/>
 
         return (
             <>
@@ -48,7 +49,6 @@ class UsersContainer extends React.Component {
                 />
             </>
         )
-
 
     }
 }
@@ -68,31 +68,11 @@ const mapStateToProps = (state) => {
 
 }
 
-// const mapDispatchToProps = (dispatch) => {
 
-//     return {
-//         follow: (userId) => {
-//             dispatch(followAC(userId));
-//         },
-//         unfollow: (userId) => {
-//             dispatch(unfollowAC(userId))
-//         },
-//         setUsers: (users) => {
-//             dispatch(setUsersAC(users));
-//         },
-//         changeCurrentPage: (currentPage) => {
-//             dispatch(changeCurrentPageAC(currentPage));
-//         },
-//         setTotalUsersCount: (totalCount) => {
-//             dispatch(setTotalUsersCountAC(totalCount));
-//         },
-//         toggleIsFetching: (isFetching) => {
-//             dispatch(toggleIsFetichingAC(isFetching));
-//         }
+export default compose(
+    connect(mapStateToProps, { follow, unfollow, changeCurrentPageThunk, getUsers }),
+    withAuthRedirect
+)(UsersContainer);
 
-//     }
 
-// }
-
-export default connect(mapStateToProps, { follow, unfollow, changeCurrentPageThunk, getUsers })(UsersContainer);
 
