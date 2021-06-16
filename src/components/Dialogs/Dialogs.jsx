@@ -2,8 +2,10 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import {addMessageActionCreator,updateNewMessageTextActionCreator} from '../../redux/dialogsReducer'
+import { addMessageActionCreator, updateNewMessageTextActionCreator } from '../../redux/dialogsReducer'
 import { Redirect } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 
 
@@ -11,22 +13,16 @@ const Dialogs = (props) => {
 
 
     let dialogsElements = props.dialogs
-    .map( d => <DialogItem name ={d.name} key={d.id} id={d.id}/>);
+        .map(d => <DialogItem name={d.name} key={d.id} id={d.id} />);
 
     let messagesElements = props.messages
-    .map( m => <Message message={m.message} key={m.id} />);
+        .map(m => <Message message={m.message} key={m.id} />);
 
-    let messageElement = React.createRef();
 
-    let addMessage = () => {
 
-        props.addMessage();
-    }
-    let updateNewMessage = () => {
+    let addMessage = (message) => {
 
-        let text = messageElement.current.value;
-        props.updateNewMessage(text);
-        
+        props.addMessage(message);
     }
 
 
@@ -41,10 +37,45 @@ const Dialogs = (props) => {
                 {messagesElements}
             </div>
             <div>
-                <textarea placeholder='Enter your message' onChange={updateNewMessage} ref={messageElement} value={props.newMessage}></textarea>
-                <button className={s.button1} onClick={addMessage}>Submit</button>
+                <TextAreaForm addMessage={addMessage} />
             </div>
         </div>
+    )
+}
+
+const TextAreaForm = (props) => {
+
+    const formik = useFormik({
+        initialValues: {
+            message: ''
+        },
+        validationSchema: Yup.object({
+            message: Yup.string()
+                .max(15, 'Must be 15 character or less')
+                .required('Required'),
+        }),
+        onSubmit: values => {
+            console.log(values.message);
+            props.addMessage(values.message)
+        }
+    });
+
+    return (
+        <form onSubmit={formik.handleSubmit}>
+            <textarea id='message' name='message'
+                onChange={formik.handleChange}
+                value={formik.values.message}
+                onBlur={formik.handleBlur} />
+
+            {formik.touched.message && formik.errors.message ? (
+                <div>{formik.errors.message}</div>
+            ) : null}
+
+
+            <br />
+
+            <button type='submit'>Submit</button>
+        </form>
     )
 }
 

@@ -10,7 +10,7 @@ let initialState = {
         { id: 3, message: 'The briefing is in session, Anakin' }
     ],
 
-    newMessage: '',
+
 
     dialogs: [
         { id: 1, name: 'Obi-wan Kenobi' },
@@ -20,38 +20,29 @@ let initialState = {
         { id: 5, name: 'Mies Windu' },
         { id: 6, name: 'Chancelor Palpatine' }
     ],
-    
+
 }
 
 const dialogsReducer = (state = initialState, action) => {
 
     switch (action.type) {
 
-        case ADD_MESSAGE: 
+        case ADD_MESSAGE:
 
+            let count = state.messages.length
+            count++
             let newMessage = {
-                id: 4,
-                message: state.newMessage
+                id: count,
+                message: action.message
             };
-            
-            return (
-                {
-                    ...state,   
-                    messages: [...state.messages , newMessage],
-                    newMessage: ''
-                }
-            )
-        
-
-        case UPDATE_NEW_MESSAGE_TEXT: 
 
             return (
                 {
                     ...state,
-                    newMessage: action.newMessage
+                    messages: [...state.messages, newMessage],
                 }
             )
-        
+
         default:
 
             return state;
@@ -59,10 +50,8 @@ const dialogsReducer = (state = initialState, action) => {
     }
 }
 
-export const addMessageActionCreator = () => ({type: ADD_MESSAGE})
-export const updateNewMessageTextActionCreator = (text) => ({
-    type: UPDATE_NEW_MESSAGE_TEXT, newMessage: text
-})
+export const addMessageActionCreator = (message) => ({type: ADD_MESSAGE, message})
+
 
 
 export default dialogsReducer;

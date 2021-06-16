@@ -4,15 +4,13 @@ class ProfileStatus extends React.Component {
 
     constructor(props){
         super(props);
-        this.newPostElement = React.createRef();
 
     }
 
-
     state = {
-        status: 'good',
+        status: this.props.profileStatus,
         editMode: false,
-        newMessage: ''
+
     }
 
     activateEditMode() {
@@ -25,6 +23,8 @@ class ProfileStatus extends React.Component {
         this.setState({
             editMode: false
         })
+
+        this.props.updateProfileStatus(this.state.status)
     }
 
     handleFocus(event) {
@@ -34,23 +34,24 @@ class ProfileStatus extends React.Component {
     }
 
 
-    newMessageHandler = () => {
-
-        let text = this.newPostElement.current.value;
+    newMessageHandler = (e) => {
 
         this.setState({
-            newMessage: text
+
+            status: e.currentTarget.value
         })
 
     }
 
-    addProfileStatus() {
-        this.setState({
-            status: this.state.newMessage,
-            newMessage: ''
-        })
-    }
+    componentDidUpdate(prevProps, prevStatus) {
 
+        if (prevProps.profileStatus !== this.props.profileStatus) {
+            this.setState({
+                status: this.props.profileStatus
+            })
+        }
+
+    }
 
 
 
@@ -61,16 +62,15 @@ class ProfileStatus extends React.Component {
             <div>
                 {!this.state.editMode &&
                     <div>
-                        <span onDoubleClick={this.activateEditMode.bind(this)}>{this.state.status}</span>
+                        <span onDoubleClick={this.activateEditMode.bind(this)}>{this.props.profileStatus || "-----"}</span>
                     </div>
                 }
                 {this.state.editMode &&
                     <div>
-                        <input value={this.state.newMessage} onChange={this.newMessageHandler.bind(this)} ref={this.newPostElement} onFocus={this.handleFocus} autoFocus={true} onBlur={this.deactivaeEditMode.bind(this)} ></input>
+                        <input value={this.state.status} onChange={this.newMessageHandler}  onFocus={this.handleFocus} autoFocus={true} onBlur={this.deactivaeEditMode.bind(this)} ></input>
                     </div>
                 }
                 <div>
-                    <button onClick={this.addProfileStatus.bind(this)}>Submit</button>
                 </div>
             </div>
 
