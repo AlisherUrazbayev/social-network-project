@@ -34,22 +34,21 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
-export const setAuthUserData = (id,email,login,isLoggedIn) => ({type: SET_AUTH_USER_DATA, data: {id,email,login},isLoggedIn})
+export const setAuthUserData = (id, email, login, isLoggedIn) => ({ type: SET_AUTH_USER_DATA, data: { id, email, login }, isLoggedIn })
 
-export const setAuthUserDataThunk = () => {
-    return (dispatch) => {
+export const setAuthUserDataThunk = () => (dispatch) => {
 
-        requestsAPI.getMineAuth()
-            .then(data => {
+    return requestsAPI.getMineAuth()
+        .then(data => {
 
-                if (data.resultCode === 0) {
+            if (data.resultCode === 0) {
 
-                    let { id, email, login } = data.data;
-                    dispatch(setAuthUserData(id, email, login,true));
+                let { id, email, login } = data.data;
+                dispatch(setAuthUserData(id, email, login, true));
 
-                }
-            })
-    }
+            }
+        })
+
 }
 
 export const login =(email,password, rememberMe) => {

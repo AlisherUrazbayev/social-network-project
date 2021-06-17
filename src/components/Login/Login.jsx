@@ -1,19 +1,22 @@
 import React from 'react';
-import {useFormik} from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { connect } from 'react-redux';
-import {login} from './../../redux/auth-reducer'
- 
+import { login } from './../../redux/auth-reducer'
+
+import { Redirect } from "react-router-dom";
+
 const Login = (props) => {
 
 
     return (
         <div>
             <h1>Login</h1>
-            <LoginForm {...props} login ={props.login} />
+            { !props.isLoggedIn ? <LoginForm {...props} login={props.login} /> :
+                <Redirect to={`/profile`} />}
         </div>
     )
-} 
+}
 
 const LoginForm = (props) => {
 
@@ -34,7 +37,8 @@ const LoginForm = (props) => {
         }),
         onSubmit: values => {
 
-            props.login(values.username, values.password,values.rememberMe)
+            props.login(values.username, values.password, values.rememberMe)
+
         }
     });
 
@@ -76,4 +80,9 @@ const LoginForm = (props) => {
     )
 }
 
-export default connect(null, { login })(Login);
+const mapStateToProps = (state) => ({
+
+    isLoggedIn: state.auth.isLoggedIn
+})
+
+export default connect(mapStateToProps, { login })(Login);
