@@ -1,6 +1,7 @@
 import React from 'react';
 import Preloader from '../../common/preloader/Preloader';
 import s from './ProfileInfo.module.css';
+import userPhoto from './../../../assets/images/userPhoto.png'
 
 const ProfileInfo = (props) => {
 
@@ -15,7 +16,7 @@ const ProfileInfo = (props) => {
     return (
         <div className=''>
             <div>
-                <img src={props.userProfile.photos.large}></img>
+                <img src={props.userProfile.photos.large != null ? props.userProfile.photos.large: userPhoto}></img>
             </div>
             <div className={s.descreptionBlock}>
                 Name: {props.userProfile.fullName}

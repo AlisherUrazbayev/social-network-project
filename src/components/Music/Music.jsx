@@ -1,10 +1,12 @@
 import React from 'react';
+import {Button , Typography} from '@material-ui/core'
 
 const Music = () => {
 
     return (
         <div>
-            Music
+            <Typography variant='h4'>Music</Typography>
+            <Button variant="contained" color="default">Submit</Button>
         </div>
     )
 }

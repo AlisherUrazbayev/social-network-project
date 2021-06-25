@@ -4,6 +4,7 @@ import MyPostsContainer from './MyPosts/MyPostsContainer';
 import s from './Profile.module.css';  
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import ProfileStatus from './ProfileStatus/ProfileStatus';
+import ProfileStatusHooks from './ProfileStatus/ProfileStatusHooks';
 
 
 const Profile = (props) => {
@@ -11,8 +12,8 @@ const Profile = (props) => {
     return (
         <div >
             <ProfileInfo userProfile={props.userProfile} />
-            <ProfileStatus profileStatus={props.profileStatus} updateProfileStatus={props.updateProfileStatus}/>
-            <MyPostsContainer store = {props.store} userProfile={props.userProfile} />
+            <ProfileStatusHooks profileStatus={props.profileStatus} updateProfileStatus={props.updateProfileStatus}/>
+            <MyPostsContainer />
         </div>
     )
 }

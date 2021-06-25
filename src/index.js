@@ -4,30 +4,32 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import {addPost, newPostChange, addMessage , updateNewMessageText} from './redux/store';
 import store from './redux/reduxStore'
 import { Provider } from 'react-redux';
 
 
 
-export let rerenderEntireTree = () => {
+// export let rerenderEntireTree = () => {
 
-  ReactDOM.render(
-    <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </BrowserRouter>,
-    document.getElementById('root')
-  );
-}
+//   ReactDOM.render(
+//     <BrowserRouter>
+//       <Provider store={store}>
+//         <App />
+//       </Provider>
+//     </BrowserRouter>,document.getElementById('root'));
+// }
+ReactDOM.render(
+  <BrowserRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>,document.getElementById('root'));
 
-rerenderEntireTree();
+//rerenderEntireTree();
 
-store.subscribe(() => {
-  //let state = store.getState()
-  rerenderEntireTree();
-});
+// store.subscribe(() => {
+//   rerenderEntireTree();
+// });
 
 
 

@@ -7,7 +7,7 @@ import DialogsContainer from './components/Dialogs/DialogsContainer';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, withRouter } from 'react-router-dom';
 import Footer from './components/Footer/Footer';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
@@ -16,12 +16,14 @@ import Login from './components/Login/Login'
 import { connect } from 'react-redux';
 import { initializeApp } from './redux/app-reducer'
 import Preloader from './components/common/preloader/Preloader';
+import { compose } from 'redux';
+import {AppBar} from '@material-ui/core';
 
 
 
 class App extends React.Component {
 
-  componentDidMount(){
+  componentDidMount() {
 
     this.props.initializeApp();
 
@@ -29,13 +31,16 @@ class App extends React.Component {
 
   render() {
 
-    if(!this.props.initialized) {
+    if (!this.props.initialized) {
       return <> <Preloader /> </>
     }
 
     return (
+
       <div className='app-wrapper'>
-        <HeaderContainer />
+        <div className='app-wrapper-header'>
+          <HeaderContainer />
+        </div>
         <Navbar />
         <div className='app-wrapper-content'>
           <Route path='/dialogs'
@@ -60,4 +65,7 @@ const mapStateToProps = (state) => ({
 
 })
 
-export default connect(mapStateToProps ,{initializeApp})(App); 
+export default compose(
+  withRouter,
+  connect(mapStateToProps, { initializeApp }))(App);
+

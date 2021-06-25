@@ -1,11 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { follow, unfollow, changeCurrentPageThunk, getUsers } from '../../redux/usersReducer';
+import { follow, unfollow, changeCurrentPageThunk, requestUsers } from '../../redux/usersReducer';
 import Users from './Users';
 import Preloader from '../common/preloader/Preloader';
 import { Redirect } from 'react-router-dom';
 import { withAuthRedirect } from './../../hoc/hoc'
 import { compose } from 'redux';
+import { getCurrentPage, getFollowingInProgress, getIsFetching, getIsLoggedIn, getPageSize, getTotalUsersCount, getUsers } from '../../redux/users-selectors';
 
 
 
@@ -18,20 +19,21 @@ class UsersContainer extends React.Component {
 
     componentDidMount() {
 
-        this.props.getUsers(this.props.currentPage, this.props.pageSize);
+        this.props.requestUsers(this.props.currentPage, this.props.pageSize);
 
     }
 
     changeCurrentPage = (pageNumber) => {
 
         this.props.changeCurrentPageThunk(pageNumber);
-        this.props.getUsers(pageNumber, this.props.pageSize);
+        this.props.requestUsers(pageNumber, this.props.pageSize);
 
     }
 
 
     render() {
 
+        console.log('render')
 
         return (
             <>
@@ -54,15 +56,16 @@ class UsersContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log('mapStateToProps')
 
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress,
-        isLoggedIn: state.auth.isLoggedIn
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state),
+        isLoggedIn: getIsLoggedIn(state),
 
     }
 
@@ -70,7 +73,7 @@ const mapStateToProps = (state) => {
 
 
 export default compose(
-    connect(mapStateToProps, { follow, unfollow, changeCurrentPageThunk, getUsers }),
+    connect(mapStateToProps, { follow, unfollow, changeCurrentPageThunk, requestUsers }),
     withAuthRedirect
 )(UsersContainer);
 

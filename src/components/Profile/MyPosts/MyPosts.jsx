@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 
 const MyPosts = (props) => {
 
+
     if (!props.userProfile) {
         return (
             <>
@@ -28,6 +29,7 @@ const MyPosts = (props) => {
         props.addPost(post);
     }
 
+    console.log('render');
     return (
         <div className={s.postsBlock}>
             <h2>My posts</h2>

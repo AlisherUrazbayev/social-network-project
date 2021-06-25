@@ -1,4 +1,4 @@
-import {requestsAPI,authAPI} from './../api/api';
+import { requestsAPI, authAPI } from './../api/api';
 
 
 const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA';
@@ -10,7 +10,7 @@ let initialState = {
     email: null,
     login: null,
     isLoggedIn: false
-    
+
 }
 
 const authReducer = (state = initialState, action) => {
@@ -36,49 +36,40 @@ const authReducer = (state = initialState, action) => {
 
 export const setAuthUserData = (id, email, login, isLoggedIn) => ({ type: SET_AUTH_USER_DATA, data: { id, email, login }, isLoggedIn })
 
-export const setAuthUserDataThunk = () => (dispatch) => {
+export const setAuthUserDataThunk = () => async (dispatch) => {
 
-    return requestsAPI.getMineAuth()
-        .then(data => {
+    const response = await requestsAPI.getMineAuth()
 
-            if (data.resultCode === 0) {
+    if (response.data.resultCode === 0) {
 
-                let { id, email, login } = data.data;
-                dispatch(setAuthUserData(id, email, login, true));
+        let { id, email, login } = response.data;
+        dispatch(setAuthUserData(id, email, login, true));
 
-            }
-        })
-
-}
-
-export const login =(email,password, rememberMe) => {
-    return(dispatch) => {
-        authAPI.login(email, password, rememberMe)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    requestsAPI.getMineAuth()
-                        .then(data => {
-
-                            if (data.resultCode === 0) {
-
-                                let { id, email, login } = data.data;
-                                dispatch(setAuthUserData(id, email, login, true));
-
-                            }
-                        })
-                }
-            })
     }
 }
 
-export const logout = () => {
-    return (dispatch) => {
-        authAPI.logout()
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(setAuthUserData(null, null, null, false))
-                }
-            })
+export const login = (email, password, rememberMe) => async (dispatch) => {
+
+    const response = await authAPI.login(email, password, rememberMe)
+
+    if (response.data.resultCode === 0) {
+        const data = await requestsAPI.getMineAuth()
+
+        if (data.resultCode === 0) {
+
+            let { id, email, login } = data.data;
+            dispatch(setAuthUserData(id, email, login, true));
+
+        }
+    }
+}
+
+export const logout = () => async (dispatch) => {
+
+    const response = await authAPI.logout()
+
+    if (response.data.resultCode === 0) {
+        dispatch(setAuthUserData(null, null, null, false))
     }
 }
 

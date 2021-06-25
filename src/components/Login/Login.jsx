@@ -3,15 +3,18 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { connect } from 'react-redux';
 import { login } from './../../redux/auth-reducer'
-
+import { Button, Typography, TextField, Checkbox, Container, Grid, Paper } from '@material-ui/core'
 import { Redirect } from "react-router-dom";
+import useStyles from './../../styles'
+import LockRoundedIcon from '@material-ui/icons/LockRounded';
+
 
 const Login = (props) => {
 
+    const classes = useStyles();
 
     return (
-        <div>
-            <h1>Login</h1>
+        <div className={classes.container}>
             { !props.isLoggedIn ? <LoginForm {...props} login={props.login} /> :
                 <Redirect to={`/profile`} />}
         </div>
@@ -20,6 +23,7 @@ const Login = (props) => {
 
 const LoginForm = (props) => {
 
+    const classes = useStyles();
 
     const formik = useFormik({
         initialValues: {
@@ -43,40 +47,54 @@ const LoginForm = (props) => {
     });
 
     return (
-        <form onSubmit={formik.handleSubmit}>
-            <label>Username: </label>
-            <input id='username' name='username' type='text'
-                onChange={formik.handleChange}
-                value={formik.values.username}
-                onBlur={formik.handleBlur} />
+        <Container component="main" maxWidth="xs">
+            <div className={classes.paper}>
+                <LockRoundedIcon/>
+                <Typography component="h1" variant="h5">
+                    Sign in
+                </Typography>
+                <form className={classes.form} onSubmit={formik.handleSubmit}>
+                    <TextField variant="outlined"
+                        margin="normal"
+                        required
+                        autoFocus
+                        fullWidth label='Email Address' id='username' name='username' type='text'
+                        onChange={formik.handleChange}
+                        value={formik.values.username}
+                        onBlur={formik.handleBlur} />
 
-            {formik.touched.username && formik.errors.username ? (
-                <div>{formik.errors.username}</div>
-            ) : null}
+                    {formik.touched.username && formik.errors.username ? (
+                        <div className={classes.errors}>{formik.errors.username}</div>
+                    ) : null}
 
-            <br />
+                    <br />
 
-            <label>Password: </label>
-            <input id='password' name='password' type='password'
-                onChange={formik.handleChange}
-                value={formik.values.password}
-                onBlur={formik.handleBlur} />
+                    <TextField variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth label='Password' id='password' name='password' type='password'
+                        onChange={formik.handleChange}
+                        value={formik.values.password}
+                        onBlur={formik.handleBlur} />
 
-            {formik.touched.password && formik.errors.password ? (
-                <div>{formik.errors.password}</div>
-            ) : null}
+                    {formik.touched.password && formik.errors.password ? (
+                        <div className={classes.errors}>{formik.errors.password}</div>
+                    ) : null}
 
-            <br />
+                    <br />
 
-            <label>Remember me</label>
-            <input id='rememberMe' name='rememberMe' type='checkbox'
-                onChange={formik.handleChange}
-                value={formik.values.rememberMe} />
+                    <label>Remember me</label>
+                    <Checkbox id='rememberMe' name='rememberMe' type='checkbox'
+                        color="primary"
+                        onChange={formik.handleChange}
+                        value={formik.values.rememberMe} />
 
-            <br />
+                    <br />
 
-            <button type='submit'>Submit</button>
-        </form>
+                    <Button className={classes.buttons} fullWidth variant="contained" color="primary" type='submit'>Sign in</Button>
+                </form>
+            </div>
+        </Container>
     )
 }
 

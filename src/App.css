@@ -9,7 +9,10 @@
   grid-template-columns: 2fr 10fr;                     
                       
 }
-
+.app-wrapper-header {
+  grid-area: h;
+  background-color: aqua;
+}
 .app-wrapper-content {
 
     grid-area: c;
