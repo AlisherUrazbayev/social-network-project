@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     },
     text: {
         textDecoration: 'none',
-        color: 'white'
+        color: 'black'
     }
 
 }));

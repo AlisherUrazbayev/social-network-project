@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { Typography, IconButton, Paper, Link,TextField } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 const ProfileStatusHooks = (props) => {
 
@@ -43,12 +45,12 @@ const ProfileStatusHooks = (props) => {
             <div>
                 {!editMode &&
                     <div>
-                        <span onDoubleClick={activateEditMode}>{props.profileStatus || "-----"}</span>
+                        <Typography color='primary' onDoubleClick={activateEditMode}>{props.profileStatus || "-----"}</Typography>
                     </div>
                 }
                 {editMode &&
                     <div>
-                        <input onChange={newMessageHandler} onBlur={deactivateEditMode} onFocus={handleFocus} autoFocus={true} value={status}  ></input>
+                        <TextField id="outlined-basic"  onChange={newMessageHandler} onBlur={deactivateEditMode} onFocus={handleFocus} autoFocus={true} value={status}  ></TextField>
                     </div>
                 }
                 <div>

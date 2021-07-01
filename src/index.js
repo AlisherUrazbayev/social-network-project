@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import store from './redux/reduxStore'
 import { Provider } from 'react-redux';
 
@@ -19,11 +19,11 @@ import { Provider } from 'react-redux';
 //     </BrowserRouter>,document.getElementById('root'));
 // }
 ReactDOM.render(
-  <BrowserRouter>
+  <HashRouter>
     <Provider store={store}>
       <App />
     </Provider>
-  </BrowserRouter>,document.getElementById('root'));
+  </HashRouter>,document.getElementById('root'));
 
 //rerenderEntireTree();
 

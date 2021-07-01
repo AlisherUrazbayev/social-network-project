@@ -1,6 +1,8 @@
 
 .item {
-    color: greenyellow;
+    color: black    ;
+    display: flex;
+    flex-direction: column;
 }
 
 .item img {

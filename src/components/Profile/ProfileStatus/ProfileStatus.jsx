@@ -1,4 +1,6 @@
 import React from 'react';
+import { Typography, IconButton, Paper, Link,TextField } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 class ProfileStatus extends React.Component {
 
@@ -62,12 +64,12 @@ class ProfileStatus extends React.Component {
             <div>
                 {!this.state.editMode &&
                     <div>
-                        <span onDoubleClick={this.activateEditMode.bind(this)}>{this.props.profileStatus || "-----"}</span>
+                        <Typography color='primary' onDoubleClick={this.activateEditMode.bind(this)}>{this.props.profileStatus || "-----"}</Typography>
                     </div>
                 }
                 {this.state.editMode &&
                     <div>
-                        <input value={this.state.status} onChange={this.newMessageHandler}  onFocus={this.handleFocus} autoFocus={true} onBlur={this.deactivaeEditMode.bind(this)} ></input>
+                        <TextField id="standard-basic" value={this.state.status} onChange={this.newMessageHandler}  onFocus={this.handleFocus} autoFocus={true} onBlur={this.deactivaeEditMode.bind(this)} ></TextField>
                     </div>
                 }
                 <div>

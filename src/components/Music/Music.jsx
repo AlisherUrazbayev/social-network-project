@@ -6,7 +6,6 @@ const Music = () => {
     return (
         <div>
             <Typography variant='h4'>Music</Typography>
-            <Button variant="contained" color="default">Submit</Button>
         </div>
     )
 }

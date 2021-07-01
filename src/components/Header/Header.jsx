@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import s from './Header.module.css';
 import logo from './../../assets/images/imageLogo.jpeg'
-import { AppBar, Typography, CssBaseline, Toolbar, IconButton, Badge,Button } from '@material-ui/core';
+import { AppBar, Typography, CssBaseline, Toolbar, IconButton, Badge, Button, Link } from '@material-ui/core';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     username: {
-        paddingLeft:'10px'
+        paddingLeft: '10px'
     }
 
 }));
@@ -33,12 +33,12 @@ const Header = (props) => {
             <CssBaseline />
             <AppBar position='relative'>
                 <Toolbar>
-                    <Typography className={classes.title}  variant='h6'>Social Network</Typography>
+                    <Typography className={classes.title} variant='h6'>Social Network</Typography>
                     <div className={classes.sectionDesktop}>
-                        <IconButton aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={4} color="secondary">
+                        <IconButton aria-label='show 4 new mails' color="inherit" >
+                            <NavLink className={classes.text} to='/dialogs'>
                                 <MailIcon />
-                            </Badge>
+                            </NavLink>
                         </IconButton>
                         <IconButton aria-label="show 17 new notifications" color="inherit">
                             <Badge badgeContent={17} color="secondary">
@@ -50,7 +50,7 @@ const Header = (props) => {
                         </IconButton>
                     </div>
                     <div className={classes.username}>
-                    {props.login}
+                        {props.login}
                     </div>
                     {props.isLoggedIn ? <Button color='inherit' onClick={() => { props.logout() }}>Log out</Button> :
                      <Button color='inherit'><NavLink to={'/login'}>Login</NavLink> </Button>}

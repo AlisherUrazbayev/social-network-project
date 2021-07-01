@@ -1,9 +1,63 @@
 import React from 'react';
 import Preloader from '../../common/preloader/Preloader';
-import s from './ProfileInfo.module.css';
-import userPhoto from './../../../assets/images/userPhoto.png'
+import userPhoto from './../../../assets/images/avatarPhoto.jpeg'
+import { Typography, IconButton, Paper, Link, Avatar } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import WebIcon from '@material-ui/icons/Web';
+import ProfileStatusHooks from './../ProfileStatus/ProfileStatusHooks';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+      '& > *': {
+        margin: theme.spacing(3),
+        marginLeft: theme.spacing(6),
+        width: theme.spacing(50),
+        height: theme.spacing(60),
+      },
+    },
+    img:  {
+        width: theme.spacing(50),
+        height: theme.spacing(35),
+        border: '0',
+    },
+    infoText: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        marginLeft: theme.spacing(5),
+        marginRight: theme.spacing(5),
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(2),
+    },
+    header: {
+        borderStyle: 'none none groove none',
+        borderWidth: "3px",
+        
+    },
+    aboutMeContent: {
+        borderStyle: 'soild',
+        paddingBottom: theme.spacing(10),
+        paddingTop: theme.spacing(2),
+    },
+    contactLinks: {
+        display:'flex',
+        justifyContent: 'space-around',
+        paddingTop: theme.spacing(1),
+    },
+    descriptionText: {
+        paddingBottom: theme.spacing(5),
+        paddingTop: theme.spacing(1),
+    }
+  }));
 
 const ProfileInfo = (props) => {
+
+    const classes = useStyles();
 
     if (!props.userProfile) {
         return (
@@ -14,26 +68,82 @@ const ProfileInfo = (props) => {
     }
 
     return (
-        <div className=''>
-            <div>
-                <img src={props.userProfile.photos.large != null ? props.userProfile.photos.large: userPhoto}></img>
-            </div>
-            <div className={s.descreptionBlock}>
-                Name: {props.userProfile.fullName}
-            </div>
-            <div className={s.descreptionBlock}>
-                About me: {props.userProfile.aboutMe}
-            </div>
-            <div className={s.descreptionBlock}>
-                Looking for a job: {props.userProfile.lookingForAJob === true?'In active search':'Not looking'}
-            </div>
-            <div className={s.descreptionBlock}>
-                Descreption: {props.userProfile.lookingForAJobDescription}
-            </div>
-            <div className={s.descreptionBlock}>
-                Contact me: <br/> {props.userProfile.contacts.github}  <br/> {props.userProfile.contacts.facebook} <br/>
-                {props.userProfile.contacts.twitter}
-            </div>
+        <div className={classes.root}>
+            <Paper>
+                <div >
+                <Typography align='center' color='primary' variant='h5'>Profile Details</Typography>
+                </div>
+                <div>
+                    <Avatar variant='square' className={classes.img} src={props.userProfile.photos.large != null ? props.userProfile.photos.large : '/broken-image.jpg'} />
+                </div>
+                <div className={classes.infoText}>
+                    <Typography color='primary' variant='h6'>Name</Typography>
+                    <Typography color='inherit' variant='h6'>{props.userProfile.fullName}</Typography>
+                </div>
+                <div className={classes.infoText}>
+                    <Typography color='primary' variant='h6'>Age</Typography>
+                    <Typography color='inherit' variant='h6'>21</Typography>
+                </div>
+                <div className={classes.infoText}>
+                    <Typography color='primary' variant='h6'>Location</Typography>
+                    <Typography color='inherit' variant='h6'>Toronto</Typography>
+                </div>
+            </Paper>
+            <Paper>
+                <div className={classes.header}>
+                    <Typography align='left' color='primary' variant='h5'>About me</Typography>
+                </div>
+                <div className={classes.aboutMeContent}>
+                    <div className={classes.infoText}>
+                        <Typography color='primary' variant='h6'>Name</Typography>
+                        <Typography color='inherit' variant='h6'>{props.userProfile.fullName}</Typography>
+                    </div>
+                    <div className={classes.infoText}>
+                        <Typography color='primary' variant='h6'>Job status</Typography>
+                        <Typography color='inherit' variant='h6'>{props.userProfile.lookingForAJob === true ? 'In active search' : 'Not looking'}</Typography>
+                    </div>
+                    <div className={classes.infoText}>
+                        <Typography color='primary' variant='h6'>Job description</Typography>
+                        <Typography color='inherit' variant='h6'>{props.userProfile.lookingForAJobDescription}</Typography>
+                    </div>
+                    <div className={classes.infoText}>
+                        <Typography color='primary' variant='h6'>Status</Typography>
+                        <ProfileStatusHooks profileStatus={props.profileStatus} updateProfileStatus={props.updateProfileStatus} />
+                    </div>
+                    <div className={classes.header}>
+                        <Typography align='left' color='primary' variant='h5'>Description</Typography>
+                    </div>
+                    <div className={classes.descriptionText}>
+                        <Typography align='left' color='inhert' variant='body1'>{props.userProfile.aboutMe != null ? props.userProfile.aboutMe : <a>No info to dispay</a>}</Typography>
+                    </div>
+                    <div className={classes.header}>
+                        <Typography align='left' color='primary' variant='h5'>Contact me</Typography>
+                    </div>
+                    <div className={classes.contactLinks}>
+                        <IconButton color="inherit">
+                            <Link href={props.userProfile.contacts.instagram != null ?props.userProfile.contacts.instagram: 'https://www.instagram.com/' } target="_blank">
+                                <InstagramIcon fontSize='large' />
+                            </Link>
+                        </IconButton>
+                        <IconButton color="inherit">
+                            <Link href={props.userProfile.contacts.facebook != null ?props.userProfile.contacts.facebook : 'https://www.facebook.com/' }  target="_blank">
+                                <FacebookIcon fontSize='large' />
+                            </Link>
+                        </IconButton>
+                        <IconButton color="inherit">
+                            <Link href={props.userProfile.contacts.github != null ?props.userProfile.contacts.github : 'https://github.com/' } target="_blank">
+                                <GitHubIcon fontSize='large' />
+                            </Link>
+                        </IconButton>
+                        <IconButton color="inherit">
+                            <Link href={props.userProfile.contacts.website != null ?props.userProfile.contacts.website : 'https://www.facebook.com/' }  target="_blank">
+                                <WebIcon fontSize='large' />
+                            </Link>
+                        </IconButton>
+                    </div>
+                </div>
+                
+            </Paper>
         </div>
     )
 }
