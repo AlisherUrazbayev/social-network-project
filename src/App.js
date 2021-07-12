@@ -18,6 +18,8 @@ import { initializeApp } from './redux/app-reducer'
 import Preloader from './components/common/preloader/Preloader';
 import { compose } from 'redux';
 import { AppBar } from '@material-ui/core';
+import ProfileSettings from './components/Profile/ProfileSettings/ProfileSettings'
+
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
@@ -59,6 +61,7 @@ class App extends React.Component {
           <Route path='/users' render={() => <React.Suspense fallback={<div>Loading...</div>}>
             <UsersContainer />
           </React.Suspense>} />
+          <Route path='/profileSettings' render={() => <ProfileSettings />} />
           <Route path='/login' render={() => <Login />} />
         </div>
       </div>

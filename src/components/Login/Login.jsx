@@ -40,7 +40,7 @@ const LoginForm = (props) => {
                 .required('Required')
         }),
         onSubmit: values => {
-
+            console.log(values)
             props.login(values.username, values.password, values.rememberMe)
 
         }
@@ -100,7 +100,7 @@ const LoginForm = (props) => {
 
 const mapStateToProps = (state) => ({
 
-    isLoggedIn: state.auth.isLoggedIn
+    isLoggedIn: state.auth.isLoggedIn,
 })
 
 export default connect(mapStateToProps, { login })(Login);

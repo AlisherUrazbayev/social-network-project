@@ -79,7 +79,7 @@ const Navbar = () => {
                         <SettingsIcon/>
                     </ListItemIcon>
                     <div className={classes.textLink}>
-                    <NavLink className={classes.text} to='/settings'>Settings</NavLink>
+                    <NavLink className={classes.text} to='/profileSettings'>Settings</NavLink>
                     </div>
                 </ListItem>
             </List>

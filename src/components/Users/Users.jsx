@@ -9,6 +9,13 @@ import Paginator from './Paginator'
 const useStyles = makeStyles((theme) => ({
     userContainer: {
         margin: theme.spacing(2),
+    },
+    paginatorContainer: {
+        height: theme.spacing(7),
+        margin: theme.spacing(2)
+    },
+    paginator: {
+        margin: theme.spacing(1)
     }
 }));
 
@@ -28,9 +35,11 @@ const Users = (props) => {
     return (
         <div>
             <div>
-                <Paper className={classes.userContainer}>
+                <Paper className={classes.paginatorContainer}>
+                    <div className={classes.paginator}>
                     <Paginator totalItemsCount={props.totalUsersCount} pageSize={props.pageSize} currenPage={props.currenPage}
                         onPageChanged={props.changeCurrentPage} portionSize='10' />
+                    </div>
                 </Paper>
             </div>
             {
@@ -69,7 +78,3 @@ const Users = (props) => {
 }
 
 export default Users;
-
-// {pages.map((p) => {
-//     return <count onClick={(e) => { props.changeCurrentPage(p) }} className={props.currentPage === p && styles.currentPage}>{p}</count>
-// })}

@@ -58,6 +58,7 @@ export const requestsAPI = {
 }
 
 export const profileAPI = {
+
     getProfileStatus: function (userId) {
 
         return instance.get(`profile/status/${userId}`)
@@ -70,22 +71,32 @@ export const profileAPI = {
     setProfileStatus: function (status) {
 
         return instance.put(`profile/status`, { status })
-            
 
+    },
+
+    setProfilePhoto: function (photoFile) {
+        const formData = new FormData();
+        formData.append('image', photoFile)
+        return instance.put(`profile/photo`, formData,);
+    },
+
+    saveProfile: function(profile) {
+        return instance.put(`profile`, profile);
     }
 }
 
 export const authAPI = {
 
-    login: function (email,password,rememberMe) {
+    login: function (email, password, rememberMe) {
 
-        return instance.post(`auth/login`, {email,password,rememberMe})
-        
+        return instance.post(`auth/login`, { email, password, rememberMe })
+
     },
 
     logout: function () {
 
         return instance.delete(`auth/login`)
-        
-    }
+
+    },
+
 }

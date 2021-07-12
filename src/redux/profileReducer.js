@@ -4,14 +4,15 @@ const ADD_POST = 'ADD-POST';
 const NEW_POST_CHANGE = 'NEW-POST-CHANGE';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_USER_STATUS = 'SET_USER_STATUS';
+const SET_PROFILE_PHOTO_SUCCESS = 'SET_PROFILE_PHOTO_SUCCESS';
 
 let initialState = {
 
     posts: [
-        { id: 1, message: 'Defeated count Douku', likeCount: 1920 },
-        { id: 2, message: 'Outer rim sigeses won', likeCount: 560 },
-        { id: 3, message: 'Enemy starship destroyed', likeCount: 1560 },
-        { id: 4, message: 'Relot was libirated', likeCount: 240 },
+        { id: 1, message: 'My first post!!!', likeCount: 19 },
+        { id: 2, message: 'Started learning React.js', likeCount: 22 },
+        { id: 3, message: 'Created my first project', likeCount: 18 },
+        { id: 4, message: 'Got a new car', likeCount: 17 },
     ],
     newPost: 'some text here',
     userProfile: null,
@@ -58,6 +59,13 @@ const profileReducer = (state = initialState, action) => {
                     profileStatus: action.profileStatus
                 }
             )
+        case SET_PROFILE_PHOTO_SUCCESS:
+            return (
+                {
+                    ...state,
+                    userProfile: { ...state.userProfile, photos: action.photos }
+                }
+            )
 
         default:
             return state;
@@ -68,6 +76,7 @@ const profileReducer = (state = initialState, action) => {
 export const setUserProfile = (userProfile) => ({ type: SET_USER_PROFILE, userProfile })
 export const setProfileStatus = (profileStatus) => ({ type: SET_USER_STATUS, profileStatus })
 export const addPostActionCreator = (post) => ({ type: ADD_POST, post })
+export const setProfilePhotoSuccess = (photos) => ({ type: SET_PROFILE_PHOTO_SUCCESS, photos })
 
 
 export const getUserProfile = (userProfile) => async (dispatch) => {
@@ -86,7 +95,6 @@ export const getProfileStatus = (userId) => async (dispatch) => {
 
 export const updateProfileStatus = (status) => async (dispatch) => {
 
-
     const response = await profileAPI.setProfileStatus(status)
 
     if (response.data.resultCode === 0) {
@@ -94,5 +102,23 @@ export const updateProfileStatus = (status) => async (dispatch) => {
     }
 }
 
+export const savePhoto = (file) => async (dispatch) => {
+
+    const response = await profileAPI.setProfilePhoto(file);
+
+    if (response.data.resultCode === 0) {
+        dispatch(setProfilePhotoSuccess(response.data.data.photos));
+    }
+}
+
+export const saveProfile = (profile) => async (dispatch,getState) => {
+
+    const userId = getState().auth.id
+    const response = await profileAPI.saveProfile(profile);
+
+    if (response.data.resultCode === 0) {
+        dispatch(getUserProfile(userId));
+    }
+}
 
 export default profileReducer;

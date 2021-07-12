@@ -6,19 +6,19 @@ let initialState = {
 
     messages: [
         { id: 1, message: 'Hello there' },
-        { id: 2, message: 'Contact me as soon as possible' },
-        { id: 3, message: 'The briefing is in session, Anakin' }
+        { id: 2, message: 'How are you, my friend?' },
+        { id: 3, message: 'What is your plan for a weekend?' }
     ],
 
 
 
     dialogs: [
-        { id: 1, name: 'Obi-wan Kenobi' },
-        { id: 2, name: 'Padme Amidala' },
-        { id: 3, name: 'Ashoka Tano' },
-        { id: 4, name: 'Master Yoda' },
-        { id: 5, name: 'Mies Windu' },
-        { id: 6, name: 'Chancelor Palpatine' }
+        { id: 1, name: 'John Doe' },
+        { id: 2, name: 'Edward Mitchell' },
+        { id: 3, name: 'Robert Willington' },
+        { id: 4, name: 'Ned Stark' },
+        { id: 5, name: 'Luke Smith' },
+        { id: 6, name: 'Luke Smith' },
     ],
 
 }
