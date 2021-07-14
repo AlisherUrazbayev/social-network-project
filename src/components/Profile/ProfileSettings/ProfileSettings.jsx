@@ -1,14 +1,6 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import Preloader from '../../common/preloader/Preloader';
-import userPhoto from './../../../assets/images/avatarPhoto.jpeg'
-import { Typography, IconButton, Paper, Link, Avatar, Button, TextField, Checkbox } from '@material-ui/core';
+import { Typography, Paper, Button, TextField, Checkbox } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import GitHubIcon from '@material-ui/icons/GitHub';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import InstagramIcon from '@material-ui/icons/Instagram';
-import WebIcon from '@material-ui/icons/Web';
-import ProfileStatusHooks from './../ProfileStatus/ProfileStatusHooks';
 import { connect } from 'react-redux';
 import {saveProfile} from './../../../redux/profileReducer'
 import { withAuthRedirect } from '../../../hoc/hoc';
@@ -95,7 +87,7 @@ const ProfileSettings = (props) => {
             lookingForAJobDescription: jobDescription,
             aboutMe: aboutMe
         }
-        console.log(dataObj)
+
         props.saveProfile(dataObj)
     }
 

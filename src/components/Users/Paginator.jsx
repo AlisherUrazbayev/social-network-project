@@ -1,8 +1,9 @@
 import React from 'react';
 import cn from 'classnames';
 import styles from './Paginator.module.css';
-import { Typography, IconButton, Paper, Link, Avatar, Button, TextField, Checkbox } from '@material-ui/core';
-import {useState} from 'react';
+import { Button, } from '@material-ui/core';
+import { useState } from 'react';
+
 
 const Paginator = ({ totalItemsCount, pageSize, currenPage, onPageChanged, portionSize }) => {
 

@@ -80,7 +80,7 @@ export const profileAPI = {
         return instance.put(`profile/photo`, formData,);
     },
 
-    saveProfile: function(profile) {
+    saveProfile: function (profile) {
         return instance.put(`profile`, profile);
     }
 }
